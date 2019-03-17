@@ -14,8 +14,8 @@ namespace DAL.Enteties
         [Required]
         public string Value { get; set; }
 
-        public ICollection<Question> CorrectQuestions { get; set; }
-        public ICollection<Question> OtherQuestions { get; set; }
+        public virtual ICollection<Question> CorrectQuestions { get; set; }
+        public virtual ICollection<Question> OtherQuestions { get; set; }
 
         public Answer()
         {

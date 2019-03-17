@@ -12,7 +12,7 @@ namespace DAL.Enteties
     {
         [Required]
         [Key, Column(Order = 0)]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public virtual User User { get; set; }
 
         [Required]

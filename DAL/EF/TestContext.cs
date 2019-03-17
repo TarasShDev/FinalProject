@@ -7,6 +7,7 @@ using System.Data.Entity;
 using DAL.Enteties;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+
 namespace DAL.EF
 {
     public class TestContext: IdentityDbContext<User>
@@ -25,6 +26,9 @@ namespace DAL.EF
         {
             modelBuilder.Entity<Question>().HasMany<Answer>(q => q.CorrectAnswers).WithMany(a => a.CorrectQuestions);
             modelBuilder.Entity<Question>().HasMany<Answer>(q => q.OtherAnswers).WithMany(a => a.OtherQuestions);
+            modelBuilder.Entity<IdentityUser>().HasKey(u => u.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => r.RoleId);
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
         }
 
         static TestContext()
@@ -36,7 +40,9 @@ namespace DAL.EF
         {
             protected override void Seed(TestContext context)
             {
-                
+                Test test1 = new Test { Description = "Test2 is good", Name = "Test2" };
+                context.Tests.Add(test1);
+                context.SaveChanges();
             }
         }
     }
