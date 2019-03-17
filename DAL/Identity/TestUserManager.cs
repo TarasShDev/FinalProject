@@ -11,7 +11,7 @@ namespace DAL.Identity
 {
     public class TestUserManager:UserManager<User>
     {
-        public TestUserManager(IUserStore<User> store): base(store)
+        public TestUserManager(UserStore<User> store): base(store)
         {
 
         }
