@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Enteties;
-using DAL.Identity;
 
 namespace DAL.Interfaces
 {
@@ -14,8 +13,6 @@ namespace DAL.Interfaces
         IRepository<Question> Questions { get; }
         IRepository<Test> Tests { get; }
         IRepository<UserTest> UserTests { get; }
-        TestUserManager UserManager { get; }
-        TestRoleManager RoleManager { get; }
         void Save();
     }
 }

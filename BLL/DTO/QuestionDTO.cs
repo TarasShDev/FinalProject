@@ -11,6 +11,6 @@ namespace BLL.DTO
         public int Id { get; set; }
         public int TestId { get; set; }
         public string QuestionHeader { get; set; }
-        public int Price { get; set; }
+        public int Points { get; set; }
     }
 }

@@ -9,8 +9,6 @@ using BLL.Interfaces;
 using DAL.EF;
 using DAL.Interfaces;
 using DAL.Enteties;
-using Microsoft.AspNet.Identity;
-using DAL.Identity;
 
 namespace BLL.Services
 {

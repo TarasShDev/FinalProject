@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DAL.Repositories;
 using DAL.Enteties;
 using DAL.Interfaces;
-using DAL.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -19,8 +18,6 @@ namespace DAL.EF
         GenericRepository<Answer> answersRepository;
         GenericRepository<Test> testsRepository;
         GenericRepository<UserTest> userTestsRepository;
-        TestUserManager userManager;
-        TestRoleManager roleManager;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -29,8 +26,6 @@ namespace DAL.EF
             answersRepository = new GenericRepository<Answer>(db);
             testsRepository = new GenericRepository<Test>(db);
             userTestsRepository = new GenericRepository<UserTest>(db);
-            //userManager = new TestUserManager(new UserStore<User>(db));
-            //roleManager = new TestRoleManager(new RoleStore<Role>(db));
         }
 
         public IRepository<Answer> Answers
@@ -62,22 +57,6 @@ namespace DAL.EF
             get
             {
                 return userTestsRepository;
-            }
-        }
-
-        public TestUserManager UserManager
-        {
-            get
-            {
-                return userManager;
-            }
-        }
-
-        public TestRoleManager RoleManager
-        {
-            get
-            {
-                return roleManager;
             }
         }
 

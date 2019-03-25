@@ -61,8 +61,6 @@
     <Compile Include="Enteties\Test.cs" />
     <Compile Include="Enteties\User.cs" />
     <Compile Include="Enteties\UserTest.cs" />
-    <Compile Include="Identity\TestRoleManager.cs" />
-    <Compile Include="Identity\TestUserManager.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
