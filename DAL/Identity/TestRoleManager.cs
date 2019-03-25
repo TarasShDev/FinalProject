@@ -9,11 +9,8 @@ using DAL.Enteties;
 
 namespace DAL.Identity
 {
-    public class TestRoleManager : RoleManager<Role>
+    public class TestRoleManager 
     {
-        public TestRoleManager(RoleStore<Role> store) : base(store)
-        {
-
-        }
+        
     }
 }

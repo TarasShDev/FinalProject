@@ -17,18 +17,16 @@ namespace DAL.Enteties
 
         [Required]
         [MaxLength(370)]
-        public string QuestionHeader { get; set; }
+        public string Header { get; set; }
 
         [Required]
-        public int Price { get; set; }
+        public int Points { get; set; }
 
-        public virtual ICollection<Answer> CorrectAnswers { get; set; }
-        public virtual ICollection<Answer> OtherAnswers { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
 
         public Question()
         {
-            CorrectAnswers = new List<Answer>();
-            OtherAnswers = new List<Answer>();
+            Answers = new List<Answer>();
         }
     }
 }

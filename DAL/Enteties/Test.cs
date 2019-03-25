@@ -13,6 +13,9 @@ namespace DAL.Enteties
         public string Description { get; set; }
 
         [Required]
+        public TimeSpan PassageTime { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         public virtual ICollection<UserTest> UserTests { get; set; }

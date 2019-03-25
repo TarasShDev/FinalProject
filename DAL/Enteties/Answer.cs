@@ -14,13 +14,11 @@ namespace DAL.Enteties
         [Required]
         public string Value { get; set; }
 
-        public virtual ICollection<Question> CorrectQuestions { get; set; }
-        public virtual ICollection<Question> OtherQuestions { get; set; }
-
-        public Answer()
-        {
-            CorrectQuestions = new List<Question>();
-            OtherQuestions = new List<Question>();
-        }
+        [Required]
+        public bool IsCorrect { get; set; }
+        
+        public int QuestionId { get; set; }
+        public virtual Question Question { get; set; }
+        
     }
 }

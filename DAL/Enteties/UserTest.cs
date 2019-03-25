@@ -10,13 +10,11 @@ namespace DAL.Enteties
 {
     public class UserTest
     {
-        [Required]
-        [Key, Column(Order = 0)]
-        public string UserId { get; set; }
+        public int Id { get; set; }
+
+        public int UserId { get; set; }
         public virtual User User { get; set; }
 
-        [Required]
-        [Key, Column(Order = 1)]
         public int TestId { get; set; }
         public virtual Test Test { get; set; } 
 

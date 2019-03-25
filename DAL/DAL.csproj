@@ -58,7 +58,6 @@
     <Compile Include="EF\TestContext.cs" />
     <Compile Include="Enteties\Answer.cs" />
     <Compile Include="Enteties\Question.cs" />
-    <Compile Include="Enteties\Role.cs" />
     <Compile Include="Enteties\Test.cs" />
     <Compile Include="Enteties\User.cs" />
     <Compile Include="Enteties\UserTest.cs" />

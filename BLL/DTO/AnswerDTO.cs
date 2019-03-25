@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace DAL.Enteties
+namespace BLL.DTO
 {
-    public class Role : IdentityRole
+    public class AnswerDTO
     {
-
+        public int Id { get; set; }
+        public string Value { get; set; }
     }
 }

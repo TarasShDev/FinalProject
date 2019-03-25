@@ -9,11 +9,10 @@ using DAL.Enteties;
 
 namespace DAL.Identity
 {
-    public class TestUserManager:UserManager<User>
+    public class TestUserManager
     {
-        public TestUserManager(IUserStore<User> store): base(store)
-        {
+        
 
-        }
+        
     }
 }

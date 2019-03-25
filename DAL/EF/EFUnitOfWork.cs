@@ -29,8 +29,8 @@ namespace DAL.EF
             answersRepository = new GenericRepository<Answer>(db);
             testsRepository = new GenericRepository<Test>(db);
             userTestsRepository = new GenericRepository<UserTest>(db);
-            userManager = new TestUserManager(new UserStore<User>(db));
-            roleManager = new TestRoleManager(new RoleStore<Role>(db));
+            //userManager = new TestUserManager(new UserStore<User>(db));
+            //roleManager = new TestRoleManager(new RoleStore<Role>(db));
         }
 
         public IRepository<Answer> Answers

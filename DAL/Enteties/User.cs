@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNet.Identity;
 
 namespace DAL.Enteties
 {
-    public class User: IdentityUser
+    public class User
     {
+        public int Id { get; set; }
+
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
@@ -20,5 +23,6 @@ namespace DAL.Enteties
         {
             UserTests = new List<UserTest>();
         }
+        
     }
 }
