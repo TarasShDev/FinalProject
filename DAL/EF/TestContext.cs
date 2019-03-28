@@ -18,7 +18,7 @@ namespace DAL.EF
         public DbSet<UserTest> UserTests { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public TestContext(string connectionString) : base(connectionString)
+        public TestContext(string connectionString) : base("ServiceForTesting")
         {
 
         }

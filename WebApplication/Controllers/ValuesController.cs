@@ -4,6 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using BLL.DTO;
+using BLL.Services;
+using BLL.Interfaces;
+using DAL.EF;
 
 namespace WebApplication.Controllers
 {
@@ -11,9 +15,10 @@ namespace WebApplication.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public IEnumerable<TestDTO> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            ITestService testService = new TestingService(new EFUnitOfWork("ServiceForTesting"));
+            return testService.GetAll();
         }
 
         // GET api/values/5

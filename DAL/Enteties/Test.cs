@@ -20,9 +20,12 @@ namespace DAL.Enteties
 
         public virtual ICollection<UserTest> UserTests { get; set; }
 
+        public virtual ICollection<Question> Questions { get; set; }
+
         public Test()
         {
             UserTests = new List<UserTest>();
+            Questions = new List<Question>();
         }
     }
 }
