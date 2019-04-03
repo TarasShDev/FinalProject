@@ -11,10 +11,10 @@ namespace DAL.Enteties
 {
     public class User
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(Constraints.Constraints.User.NameMaxLength), MinLength(Constraints.Constraints.User.NameMinLength)]
         public string Name { get; set; }
 
         public virtual ICollection<UserTest> UserTests { get; set; }

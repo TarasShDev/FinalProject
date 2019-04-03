@@ -18,9 +18,9 @@ namespace DAL.Repositories
             db = context;
         }
 
-        public void Create(T item)
+        public void Create(T obj)
         {
-            db.Set<T>().Add(item);
+            db.Set<T>().Add(obj);
         }
 
         public void Delete(int id)
@@ -30,24 +30,24 @@ namespace DAL.Repositories
                 db.Set<T>().Remove(item);
         }
 
-        public IEnumerable<T> Find(Func<T, bool> predicate)
+        public async Task<IEnumerable<T>> Find(Func<T, bool> predicate)
         {
-            return db.Set<T>().Where(predicate).ToList();
+            return await db.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public T Get(int id)
+        public async Task<T> Get(int id)
         {
-            return db.Set<T>().Find(id);
+            return await db.Set<T>().FindAsync(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return db.Set<T>().ToList();
+            return await db.Set<T>().ToListAsync();
         }
 
-        public void Update(T item)
+        public void Update(T obj)
         {
-            db.Entry(item).State = EntityState.Modified;
+            db.Entry(obj).State = EntityState.Modified;
         }
     }
 }

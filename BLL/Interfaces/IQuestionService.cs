@@ -9,11 +9,9 @@ namespace BLL.Interfaces
 {
     public interface IQuestionService
     {
-        Task Create(QuestionDTO userTest);
-        Task Delete(int id);
-        Task Update(QuestionDTO userTest);
-        Task<IEnumerable<QuestionDTO>> GetAll();
-        Task<QuestionDTO> GetById(int id);
-        Task<int> CountCorrectAnswers(int id);
+        Task CreateAsync(QuestionDTO question);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(QuestionDTO question);
+        Task<QuestionDTO> GetByIdAsync(int id);
     }
 }

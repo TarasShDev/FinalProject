@@ -4,18 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using DAL.Constraints;
 
 namespace DAL.Enteties
 {
     public class Test
     {
         public int Id { get; set; }
+
+        [Required]
+        [MaxLength(Constraints.Constraints.Test.DescriptionMaxLength), MinLength(Constraints.Constraints.Test.DescriptionMinLength)]
         public string Description { get; set; }
 
         [Required]
         public TimeSpan PassageTime { get; set; }
 
         [Required]
+        [MaxLength(Constraints.Constraints.Test.NameMaxLength), MinLength(Constraints.Constraints.Test.NameMinLength)]
         public string Name { get; set; }
 
         public virtual ICollection<UserTest> UserTests { get; set; }

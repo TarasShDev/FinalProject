@@ -18,14 +18,16 @@ namespace DAL.EF
         GenericRepository<Answer> answersRepository;
         GenericRepository<Test> testsRepository;
         GenericRepository<UserTest> userTestsRepository;
+        GenericRepository<User> userRepository;
 
         public EFUnitOfWork(string connectionString)
         {
-            db = new TestContext(connectionString);
+            db = new TestContext();
             questionsRepository = new GenericRepository<Question>(db);
             answersRepository = new GenericRepository<Answer>(db);
             testsRepository = new GenericRepository<Test>(db);
             userTestsRepository = new GenericRepository<UserTest>(db);
+            userRepository = new GenericRepository<User>(db);
         }
 
         public IRepository<Answer> Answers
@@ -60,9 +62,17 @@ namespace DAL.EF
             }
         }
 
-        public void Save()
+        public IRepository<User> Users
         {
-            db.SaveChanges();
+            get
+            {
+                return userRepository;
+            }
+        }
+
+        public async Task SaveAsync()
+        {
+            await db.SaveChangesAsync();
         }
 
         private bool disposedValue = false;

@@ -17,7 +17,9 @@ namespace DAL.Enteties
         [Required]
         public bool IsCorrect { get; set; }
         
+        [Required]
         public int QuestionId { get; set; }
+
         public virtual Question Question { get; set; }
         
     }

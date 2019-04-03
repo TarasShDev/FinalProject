@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.DTO;
+using BLL.Other;
 
 namespace BLL.Interfaces
 {
     public interface IUserTestService:IDisposable
     {
-        Task Create(UserTestDTO userTest);
-        Task Delete(int id);
-        Task Update(UserTestDTO userTest);
-        Task<IEnumerable<UserTestDTO>> GetAll();
-        Task<UserTestDTO> GetById(int id);
-        IEnumerable<UserTestDTO> Find(DateTime? dateFrom, int? userId, int? testId, int? scoreMin, int? scoreMax, TimeSpan? passedTime);
+        Task AddAsync(UserTestDTO userTest);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(UserTestDTO userTest);
+        Task<IEnumerable<UserTestDTO>> GetAllAsync();
+        Task<UserTestDTO> GetByIdAsync(int id);
+        Task<IEnumerable<UserTestDTO>> FindAsync(SearchParameters parameter);
     }
 }

@@ -13,6 +13,7 @@ namespace DAL.Interfaces
         IRepository<Question> Questions { get; }
         IRepository<Test> Tests { get; }
         IRepository<UserTest> UserTests { get; }
-        void Save();
+        IRepository<User> Users { get; }
+        Task SaveAsync();
     }
 }

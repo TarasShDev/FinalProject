@@ -18,17 +18,11 @@ namespace DAL.EF
         public DbSet<UserTest> UserTests { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public TestContext(string connectionString) : base("ServiceForTesting")
+        public TestContext() : base("ServiceForTesting")
         {
 
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            
-            
-           
-        }
 
         static TestContext()
         {

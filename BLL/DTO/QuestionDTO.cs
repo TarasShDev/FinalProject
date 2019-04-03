@@ -15,14 +15,24 @@ namespace BLL.DTO
         public int Points { get; set; }
         public ICollection<AnswerDTO> Answers { get; set; }
         
-        public static QuestionDTO GetMappedElement(Question question)
+        public static QuestionDTO GetDTOElement(Question question)
         {
             return new QuestionDTO {
                 Id = question.Id,
                 Header = question.Header,
                 Points = question.Points,
+                TestId = question.TestId
+            };
+        }
+
+        public static Question GetEntityElement(QuestionDTO question)
+        {
+            return new Question
+            {
+                Id = question.Id,
                 TestId = question.TestId,
-                Answers = new List<AnswerDTO>(question.Answers.Select(x => AnswerDTO.GetMappedElement(x)).ToList())
+                Header = question.Header,
+                Points = question.Points
             };
         }
     }

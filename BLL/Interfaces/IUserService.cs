@@ -11,10 +11,11 @@ namespace BLL.Interfaces
 {
     public interface IUserService:IDisposable
     {
-        Task Create(UserDTO user);
-        Task Delete(int id);
-        Task Update(UserDTO user);
-        Task<IEnumerable<UserDTO>> GetAll();
-        Task<UserDTO> GetById(int id);
+        Task AddAsync(UserDTO user);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(UserDTO user);
+        Task<IEnumerable<UserDTO>> GetAllAsync();
+        Task<UserDTO> GetByIdAsync(int id);
+        Task<UserDTO> FindAsync(string name);
     }
 }

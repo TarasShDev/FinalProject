@@ -26,7 +26,7 @@ namespace BLL.DTO
             {
                 Id = userTest.Id,
                 User = UserDTO.GetMappedElement(userTest.User),
-                Test = new TestDTO { Id=userTest.Test.Id, Name=userTest.Test.Name},
+                Test = TestDTO.GetMappedElement(userTest.Test),
                 Score = userTest.Score,
                 TimePassed = userTest.TimePassed,
                 PassageDate = userTest.PassageDate

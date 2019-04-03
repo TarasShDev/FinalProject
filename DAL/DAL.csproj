@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constraints\Constraints.cs" />
     <Compile Include="EF\EFUnitOfWork.cs" />
     <Compile Include="EF\TestContext.cs" />
     <Compile Include="Enteties\Answer.cs" />

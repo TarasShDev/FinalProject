@@ -9,10 +9,9 @@ namespace BLL.Interfaces
 {
     public interface IAnswerService
     {
-        Task Create(AnswerDTO userTest);
-        Task Delete(int id);
-        Task Update(AnswerDTO userTest);
-        Task<IEnumerable<AnswerDTO>> GetAll();
-        Task<AnswerDTO> GetById(int id);
+        Task CreateAsync(AnswerDTO answer);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(AnswerDTO answer);
+        Task<AnswerDTO> GetByIdAsync(int id);
     }
 }
