@@ -22,8 +22,8 @@ namespace DAL.Constraints
             public const int DescriptionMinLength = 1;
             public const int NameMaxLength = 120;
             public const int NameMinLength = 4;
-            public const int MinMinutes = 1;
-            public const int MaxMinutes = 180;
+            public const double MinMinutes = 1;
+            public const double MaxMinutes = 180;
         }
 
         public class User

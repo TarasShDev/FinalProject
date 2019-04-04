@@ -19,6 +19,7 @@ namespace BLL.Services
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task CreateAsync(QuestionDTO question)
         {
             if (question == null)
@@ -42,7 +43,7 @@ namespace BLL.Services
             Question question = await _unitOfWork.Questions.Get(id);
             if (question == null)
                 throw new ArgumentNullException();
-            return QuestionDTO.GetDTOElement(question);
+            return new QuestionDTO(question);
         }
 
         public async Task UpdateAsync(QuestionDTO question)

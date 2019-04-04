@@ -9,10 +9,10 @@ namespace BLL.Other
     public class SearchParameters
     {
         public DateTime? dateFrom { get; set; }
-        int? userId { get; set; }
-        int? testId { get; set; }
-        int? scoreMin { get; set; }
-        int? scoreMax { get; set; }
-        TimeSpan? passedTime { get; set; }
+        public int? userId { get; set; }
+        public int? testId { get; set; }
+        public int? scoreMin { get; set; }
+        public int? scoreMax { get; set; }
+        public TimeSpan? maxPassedTime { get; set; }
     }
 }

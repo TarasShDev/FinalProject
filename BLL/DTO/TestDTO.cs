@@ -16,9 +16,17 @@ namespace BLL.DTO
         public bool IsOpened { get; set; }
         public ICollection<QuestionDTO> Questions { get; set; }
 
-        public static TestDTO GetMappedElement(Test test)
+        public TestDTO (Test test)
         {
-            return new TestDTO
+            Id = test.Id;
+            Description = test.Description;
+            Name = test.Name;
+            PassageTime = test.PassageTime;
+        }
+
+        public static Test GetEntityElement(TestDTO test)
+        {
+            return new Test
             {
                 Id = test.Id,
                 Description = test.Description,

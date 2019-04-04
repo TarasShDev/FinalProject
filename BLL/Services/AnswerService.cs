@@ -38,7 +38,7 @@ namespace BLL.Services
             Answer answer = await _unitOfWork.Answers.Get(id);
             if (answer == null)
                 throw new ArgumentNullException();
-            return AnswerDTO.GetDTOElement(answer);
+            return new AnswerDTO(answer);
         }
 
         public async Task UpdateAsync(AnswerDTO answer)

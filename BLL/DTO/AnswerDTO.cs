@@ -14,14 +14,11 @@ namespace BLL.DTO
         public int QuestionId { get; set; }
         public bool IsCorrect { get; set; }
 
-        public static AnswerDTO GetDTOElement(Answer answer)
+        public AnswerDTO (Answer answer)
         {
-            return new AnswerDTO
-            {
-                Id = answer.Id,
-                QuestionId = answer.QuestionId,
-                Value = answer.Value
-            };
+            Id = answer.Id;
+            QuestionId = answer.QuestionId;
+            Value = answer.Value;
         }
 
         public static Answer GetEntityElement(AnswerDTO answer)

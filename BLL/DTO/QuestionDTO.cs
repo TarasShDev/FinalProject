@@ -15,14 +15,12 @@ namespace BLL.DTO
         public int Points { get; set; }
         public ICollection<AnswerDTO> Answers { get; set; }
         
-        public static QuestionDTO GetDTOElement(Question question)
+        public QuestionDTO (Question question)
         {
-            return new QuestionDTO {
-                Id = question.Id,
-                Header = question.Header,
-                Points = question.Points,
-                TestId = question.TestId
-            };
+            Id = question.Id;
+            Header = question.Header;
+            Points = question.Points;
+            TestId = question.TestId;
         }
 
         public static Question GetEntityElement(QuestionDTO question)

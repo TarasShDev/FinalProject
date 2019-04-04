@@ -20,17 +20,14 @@ namespace BLL.DTO
         public TimeSpan TimePassed { get; set; }
         public DateTime PassageDate { get; set; }
 
-        public static UserTestDTO GetMappedElement(UserTest userTest)
+        public UserTestDTO(UserTest userTest)
         {
-            return new UserTestDTO
-            {
-                Id = userTest.Id,
-                User = UserDTO.GetMappedElement(userTest.User),
-                Test = TestDTO.GetMappedElement(userTest.Test),
-                Score = userTest.Score,
-                TimePassed = userTest.TimePassed,
-                PassageDate = userTest.PassageDate
-            };
+            Id = userTest.Id;
+            User = new UserDTO(userTest.User);
+            Test = new TestDTO(userTest.Test);
+            Score = userTest.Score;
+            TimePassed = userTest.TimePassed;
+            PassageDate = userTest.PassageDate;
         }
 
     }

@@ -10,7 +10,7 @@ namespace BLL.Interfaces
 {
     public interface IUserTestService:IDisposable
     {
-        Task AddAsync(UserTestDTO userTest);
+        Task AddAsync(UserTestDTO userTest, int userId);
         Task DeleteAsync(int id);
         Task UpdateAsync(UserTestDTO userTest);
         Task<IEnumerable<UserTestDTO>> GetAllAsync();

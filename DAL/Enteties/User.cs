@@ -11,7 +11,7 @@ namespace DAL.Enteties
 {
     public class User
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(Constraints.Constraints.User.NameMaxLength), MinLength(Constraints.Constraints.User.NameMinLength)]
