@@ -11,6 +11,8 @@ using BLL.Interfaces;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
+    [RoutePrefix("api/tests")]
     public class TestsController : ApiController
     {
         private readonly ITestService _testService;
@@ -23,87 +25,70 @@ namespace WebApplication.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetTests()
         {
-            bool isUser=true;
-            if(isUser)
-            {
-                var result = await _testService.GetAllOpenedAsync();
-                if (result==null)
-                    return NotFound();
-                return Ok(result);
-            }
-            else
-            {
-                var result = await _testService.GetAllAsync();
-                if (result==null)
-                    return NotFound();
-                return Ok(result);
-            }
+            var result = await _testService.GetAllOpenedAsync();
+            if (result==null)
+                return NotFound();
+            return Ok(result);
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetById(int id)
+        [Route("getall")]
+        [Authorize(Roles ="admin")]
+        public async Task<IHttpActionResult> GetAllTests()
         {
-            bool isUser = true;
-            var result = await _testService.GetByIdAsync(id);
+            var result = await _testService.GetAllAsync();
             if (result == null)
                 return NotFound();
-            if (isUser)
-            {
-                if (result.IsOpened == false)
-                    return StatusCode(HttpStatusCode.Forbidden);
-                return Ok(result);
-            }
-            else
-            {
-                return Ok(result);
-            }
+            return Ok(result);
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> GetByName(string name)
         {
-            bool isUser = true;
-            if (isUser)
-            {
-                var result = await _testService.FindOpenedByNameAsync(name);
-                if (result == null)
-                    return NotFound();
-                else
-                    return Ok(result);
-            }
+            var result = await _testService.FindOpenedByNameAsync(name);
+            if (result == null)
+                return NotFound();
             else
-            {
-                var result = await _testService.FindByNameAsync(name);
-                if (result == null)
-                    return NotFound();
-                else
-                    return Ok(result);
-            }
+                return Ok(result);
         }
 
-        [Route("api/tests/{id:int}/start")]
+        [HttpGet]
+        [Route("findall")]
+        [Authorize(Roles = "admin")]
+        public async Task<IHttpActionResult> GetAllByName(string name)
+        {
+            var result = await _testService.FindByNameAsync(name);
+            if (result == null)
+                return NotFound();
+            else
+                return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("start/{id:int}")]
         public async Task<IHttpActionResult> GetFullTestById(int id)
         {
-            bool isUser = true;
-            if (isUser)
-            {
-                var result = await _testService.GetByIdDetailedForUserAsync(id);
-                if (result == null)
-                    return NotFound();
-                if (result.IsOpened == false)
-                    return StatusCode(HttpStatusCode.Forbidden);
-                return Ok(result);
-            }
-            else
-            {
-                var result = await _testService.GetByIdDetailedForAdminAsync(id);
-                if (result == null)
-                    return NotFound();
-                return Ok(result);
-            }
+            var result = await _testService.GetByIdDetailedForUserAsync(id);
+            if (result == null)
+                return NotFound();
+            if (result.IsOpened == false)
+                return StatusCode(HttpStatusCode.Forbidden);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("edit/{id:int}")]
+        [Authorize(Roles = "admin")]
+        public async Task<IHttpActionResult> GetDetailedTestById(int id)
+        {
+            var result = await _testService.GetByIdDetailedForAdminAsync(id);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> AddTest([FromBody] TestDTO test)
         {
             if (test == null)
@@ -132,6 +117,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> ChangeTest(int id,[FromBody] TestDTO test)
         {
             if (test == null)
@@ -161,6 +147,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> DeleteTest(int id)
         {
             try

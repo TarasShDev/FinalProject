@@ -47,7 +47,7 @@ namespace BLL.Services
         {
             Question question = await _unitOfWork.Questions.Get(id);
             if (question == null)
-                throw new ArgumentNullException();
+                return null;
             return new QuestionDTO(question);
         }
 
