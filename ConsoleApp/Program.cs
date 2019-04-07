@@ -21,10 +21,9 @@ namespace ConsoleApp
             using (EFUnitOfWork EF = new EFUnitOfWork("ServiceForTesting"))
             {
                 
-                var res = EF.Tests.GetAll();
-
-                Console.WriteLine(res.Result.FirstOrDefault().Description);
-
+                
+               
+         
             }
             
             Console.WriteLine("finish");

@@ -33,7 +33,8 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<T>> Find(Func<T, bool> predicate)
         {
-            return await db.Set<T>().Where(predicate).AsQueryable().AsNoTracking().ToListAsync();
+            Task<IEnumerable<T>> task = Task.Run(() => db.Set<T>().AsNoTracking().Where(predicate));
+            return await task;
         }
 
         public async Task<T> Get(int id)

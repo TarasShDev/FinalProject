@@ -31,5 +31,11 @@ namespace DAL.Constraints
             public const int NameMaxLength = 50;
             public const int NameMinLength = 2;
         }
+
+        public class Answer
+        {
+            public const int ValueMinLength = 1;
+            public const int ValueMaxLength = 100;
+        }
     }
 }

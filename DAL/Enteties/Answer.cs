@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using DAL.Constraints;
 
 namespace DAL.Enteties
 {
@@ -12,6 +13,7 @@ namespace DAL.Enteties
         public int Id { get; set; }
 
         [Required]
+        [MinLength(Constraints.Constraints.Answer.ValueMinLength), MaxLength(Constraints.Constraints.Answer.ValueMaxLength)]
         public string Value { get; set; }
 
         [Required]

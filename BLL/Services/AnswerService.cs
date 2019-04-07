@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
 using DAL.Enteties;
+using DAL.Constraints;
 
 namespace BLL.Services
 {
@@ -21,8 +22,10 @@ namespace BLL.Services
 
         public async Task CreateAsync(AnswerDTO answer)
         {
-            if (answer==null || String.IsNullOrWhiteSpace(answer.Value))
-                throw new ArgumentNullException();
+            if (answer == null)
+                throw new ArgumentNullException("Сталася помилка");
+            if (answer.Value.Length < Constraints.Answer.ValueMinLength || answer.Value.Length > Constraints.Answer.ValueMaxLength)
+                throw new FormatException($"Відповідь має бути в межах {Constraints.Answer.ValueMinLength} - {Constraints.Answer.ValueMaxLength} символів.");
             _unitOfWork.Answers.Create(answer.GetEntityElement());
             await _unitOfWork.SaveAsync();
         }
@@ -42,12 +45,16 @@ namespace BLL.Services
         {
             Answer answer = await _unitOfWork.Answers.Get(id);
             if (answer == null)
-                throw new ArgumentNullException();
+                return null;
             return new AnswerDTO(answer);
         }
 
         public async Task UpdateAsync(AnswerDTO answer)
         {
+            if (answer == null)
+                throw new ArgumentNullException("Сталася помилка");
+            if(answer.Value.Length<Constraints.Answer.ValueMinLength || answer.Value.Length>Constraints.Answer.ValueMaxLength)
+                throw new FormatException($"Відповідь має бути в межах {Constraints.Answer.ValueMinLength} - {Constraints.Answer.ValueMaxLength} символів.");
             Answer ans = await _unitOfWork.Answers.Get(answer.Id);
             if (ans == null)
                 throw new ArgumentNullException();

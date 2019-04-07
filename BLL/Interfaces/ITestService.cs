@@ -17,8 +17,8 @@ namespace BLL.Interfaces
         Task<IEnumerable<TestDTO>> GetAllAsync();
 
         Task<TestDTO> GetByIdAsync(int id);
-        Task<TestDTO> GetByIdDetailedAsync(int id);
-        Task<bool> IsOpened(int id);
+        Task<TestDTO> GetByIdDetailedForUserAsync(int id);
+        Task<TestDTO> GetByIdDetailedForAdminAsync(int id);
 
         Task<IEnumerable<TestDTO>> FindByNameAsync(string name);
         Task<IEnumerable<TestDTO>> FindOpenedByNameAsync(string name);
