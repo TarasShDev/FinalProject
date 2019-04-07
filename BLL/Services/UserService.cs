@@ -29,7 +29,7 @@ namespace BLL.Services
                 throw new ArgumentException("Користувач з даним іменем вже існує");
             if (user.Name.Length < Constraints.User.NameMinLength || user.Name.Length > Constraints.User.NameMaxLength)
                 throw new FormatException();
-            _unitOfWork.Users.Create(new User { Name = user.Name });
+            _unitOfWork.Users.Create(user.GetEntityElement());
             await _unitOfWork.SaveAsync();
         }
 
@@ -41,19 +41,19 @@ namespace BLL.Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _unitOfWork.Dispose();
         }
 
-        public async Task<IEnumerable<UserDTO>> FindAsync(string name)
+        public async Task<IEnumerable<UserDTO>> FindByNameAsync(string name)
         {
             if (name == null)
                 throw new ArgumentNullException();
-            return (await _unitOfWork.Users.Find(x => x.Name.Contains(name))).Select(t => new UserDTO(t));
+            return (await _unitOfWork.Users.Find(x => x.Name.Contains(name))).Select(t => new UserDTO(t)).ToList();
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
-            return (await _unitOfWork.Users.GetAll()).Select(u => new UserDTO(u));
+            return (await _unitOfWork.Users.GetAll()).Select(u => new UserDTO(u)).ToList();
         }
 
         public async Task<UserDTO> GetByIdAsync(int id)

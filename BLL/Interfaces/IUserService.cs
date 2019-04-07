@@ -14,8 +14,9 @@ namespace BLL.Interfaces
         Task AddAsync(UserDTO user);
         Task DeleteAsync(int id);
         Task UpdateAsync(UserDTO user);
+
         Task<IEnumerable<UserDTO>> GetAllAsync();
         Task<UserDTO> GetByIdAsync(int id);
-        Task<IEnumerable<UserDTO>> FindAsync(string name);
+        Task<IEnumerable<UserDTO>> FindByNameAsync(string name);
     }
 }

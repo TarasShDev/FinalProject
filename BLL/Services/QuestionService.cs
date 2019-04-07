@@ -28,7 +28,7 @@ namespace BLL.Services
                 throw new ArgumentOutOfRangeException();
             if (question.Header.Length < Constraints.Question.HeaderMinLength || question.Header.Length > Constraints.Question.HeaderMaxLength)
                 throw new FormatException();
-            _unitOfWork.Questions.Create(QuestionDTO.GetEntityElement(question));
+            _unitOfWork.Questions.Create(question.GetEntityElement());
             await _unitOfWork.SaveAsync();
         }
 
@@ -36,6 +36,11 @@ namespace BLL.Services
         {
             _unitOfWork.Questions.Delete(id);
             await _unitOfWork.SaveAsync();
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
 
         public async Task<QuestionDTO> GetByIdAsync(int id)

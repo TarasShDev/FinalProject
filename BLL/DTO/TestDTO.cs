@@ -24,14 +24,13 @@ namespace BLL.DTO
             PassageTime = test.PassageTime;
         }
 
-        public static Test GetEntityElement(TestDTO test)
+        public Test GetEntityElement()
         {
             return new Test
             {
-                Id = test.Id,
-                Description = test.Description,
-                Name = test.Name,
-                PassageTime = test.PassageTime
+                Description = Description,
+                Name = Name,
+                PassageTime = PassageTime
             };
         }
 

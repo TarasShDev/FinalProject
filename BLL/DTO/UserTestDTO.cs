@@ -30,5 +30,17 @@ namespace BLL.DTO
             PassageDate = userTest.PassageDate;
         }
 
+        public UserTest GetEntityElement()
+        {
+            return new UserTest
+            {
+                Id = this.Id,
+                PassageDate = this.PassageDate,
+                TimePassed = this.TimePassed,
+                Score = this.Score,
+                TestId = this.Test.Id,
+                UserId = this.User.Id
+            };
+        }
     }
 }

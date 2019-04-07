@@ -22,7 +22,7 @@ namespace DAL.EF
 
         public EFUnitOfWork(string connectionString)
         {
-            db = new TestContext();
+            db = new TestContext(connectionString);
             questionsRepository = new GenericRepository<Question>(db);
             answersRepository = new GenericRepository<Answer>(db);
             testsRepository = new GenericRepository<Test>(db);

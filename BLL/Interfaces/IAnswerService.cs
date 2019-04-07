@@ -7,7 +7,7 @@ using BLL.DTO;
 
 namespace BLL.Interfaces
 {
-    public interface IAnswerService
+    public interface IAnswerService:IDisposable
     {
         Task CreateAsync(AnswerDTO answer);
         Task DeleteAsync(int id);

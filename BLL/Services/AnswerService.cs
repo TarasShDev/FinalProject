@@ -23,7 +23,7 @@ namespace BLL.Services
         {
             if (answer==null || String.IsNullOrWhiteSpace(answer.Value))
                 throw new ArgumentNullException();
-            _unitOfWork.Answers.Create(AnswerDTO.GetEntityElement(answer));
+            _unitOfWork.Answers.Create(answer.GetEntityElement());
             await _unitOfWork.SaveAsync();
         }
 
@@ -31,6 +31,11 @@ namespace BLL.Services
         {
             _unitOfWork.Answers.Delete(id);
             await _unitOfWork.SaveAsync();
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
 
         public async Task<AnswerDTO> GetByIdAsync(int id)

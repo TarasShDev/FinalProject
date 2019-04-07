@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.EF;
@@ -32,7 +33,7 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<T>> Find(Func<T, bool> predicate)
         {
-            return await db.Set<T>().AsNoTracking().ToListAsync();
+            return await db.Set<T>().Where(predicate).AsQueryable().AsNoTracking().ToListAsync();
         }
 
         public async Task<T> Get(int id)
@@ -42,7 +43,7 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            return await db.Set<T>().ToListAsync();
+            return await db.Set<T>().AsNoTracking().ToListAsync();
         }
 
         public void Update(T obj)

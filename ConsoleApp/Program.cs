@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using DAL.EF;
+using BLL.Interfaces;
+using BLL.Services;
 using DAL.Enteties;
 using System.Data.Entity;
 using System.Threading;
@@ -15,12 +17,14 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            
+
             using (EFUnitOfWork EF = new EFUnitOfWork("ServiceForTesting"))
             {
-                var q1 = EF.Tests.GetAll().Result.FirstOrDefault();
-                Console.WriteLine("...");
-                Console.WriteLine($"{q1.Name} {q1.Description}");
+                
+                var res = EF.Tests.GetAll();
+
+                Console.WriteLine(res.Result.FirstOrDefault().Description);
+
             }
             
             Console.WriteLine("finish");

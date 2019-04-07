@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using BLL.DTO;
+using BLL.Services;
 
 namespace WebApplication.Controllers
 {
-    [Authorize]
+    
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<TestDTO>> Get()
         {
-            return new string[] { "value1", "value2" };
+
+
+
+            return null;
+            
         }
 
         // GET api/values/5

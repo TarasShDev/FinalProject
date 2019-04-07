@@ -83,7 +83,7 @@ namespace WebApplication.Controllers
             IUserService userService = null;
             var UserId = this.User.Identity.GetUserId();
             var User = await _userManager.FindByIdAsync(UserId);
-            return Ok(new { User = User.UserName, Roles = User.Roles, userService.FindAsync(User.UserName).Id });
+            return Ok(new { User = User.UserName, Roles = User.Roles, userService.FindByNameAsync(User.UserName).Id });
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true

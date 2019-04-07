@@ -30,7 +30,7 @@ namespace BLL.Services
                 throw new FormatException();
             if (test.PassageTime.TotalMinutes < Constraints.Test.MinMinutes || test.PassageTime.TotalMinutes > Constraints.Test.MaxMinutes)
                 throw new ArgumentOutOfRangeException();
-            _unitOfWork.Tests.Create(TestDTO.GetEntityElement(test));
+            _unitOfWork.Tests.Create(test.GetEntityElement());
             await _unitOfWork.SaveAsync();
 
         }
@@ -41,12 +41,12 @@ namespace BLL.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<TestDTO>> FindAsync(string name)
+        public async Task<IEnumerable<TestDTO>> FindByNameAsync(string name)
         {
             return (await _unitOfWork.Tests.Find(x => x.Name.Contains(name))).Select(x => new TestDTO(x) { IsOpened=isOpened(x)});
         }
 
-        public async Task<IEnumerable<TestDTO>> FindOpenedAsync(string name)
+        public async Task<IEnumerable<TestDTO>> FindOpenedByNameAsync(string name)
         {
             return (await _unitOfWork.Tests.Find(t => t.Name.Contains(name) && isOpened(t))).Select(x => new TestDTO(x) { IsOpened=true});
         }
@@ -107,9 +107,14 @@ namespace BLL.Services
             return isOpened(test);
         }
 
-        Func<Test, bool> isOpened = x =>
+        private bool isOpened(Test test)
         {
-            return x.Questions.Any() && x.Questions.All(q => q.Answers.Any(a => a.IsCorrect));
-        };
+            return test.Questions.Any() && test.Questions.All(q => q.Answers.Any(a => a.IsCorrect));
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
+        }
     }
 }

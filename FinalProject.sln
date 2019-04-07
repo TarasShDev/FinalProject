@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{57A2D8E8-1F03-4455-98BC-0A033B8BC3A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoCContainer", "IoCContainer\IoCContainer.csproj", "{D1008D1C-69D6-4DE6-92B0-9156AF5A4504}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{57A2D8E8-1F03-4455-98BC-0A033B8BC3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57A2D8E8-1F03-4455-98BC-0A033B8BC3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57A2D8E8-1F03-4455-98BC-0A033B8BC3A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1008D1C-69D6-4DE6-92B0-9156AF5A4504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1008D1C-69D6-4DE6-92B0-9156AF5A4504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1008D1C-69D6-4DE6-92B0-9156AF5A4504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1008D1C-69D6-4DE6-92B0-9156AF5A4504}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

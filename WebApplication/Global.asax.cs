@@ -6,6 +6,10 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using IoCContainer.NinnjectModules;
+using Ninject;
+using Ninject.Modules;
+
 
 namespace WebApplication
 {
@@ -18,6 +22,12 @@ namespace WebApplication
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            NinjectModule dbModule = new DBModule("ServiceForTesting");
+            NinjectModule serviceModule = new ServiceModule();
+            var kernel = new StandardKernel(dbModule, serviceModule);
+            System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(kernel);
+
         }
     }
 }

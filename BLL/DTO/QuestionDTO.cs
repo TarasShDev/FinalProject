@@ -23,14 +23,13 @@ namespace BLL.DTO
             TestId = question.TestId;
         }
 
-        public static Question GetEntityElement(QuestionDTO question)
+        public Question GetEntityElement()
         {
             return new Question
             {
-                Id = question.Id,
-                TestId = question.TestId,
-                Header = question.Header,
-                Points = question.Points
+                TestId = TestId,
+                Header = Header,
+                Points = Points
             };
         }
     }

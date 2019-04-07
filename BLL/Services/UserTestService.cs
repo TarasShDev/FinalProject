@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Interfaces;
@@ -25,14 +26,10 @@ namespace BLL.Services
         {
             if (userTest == null)
                 throw new ArgumentNullException();
-            _unitOfWork.UserTests.Create(new UserTest()
-            {
-                PassageDate = userTest.PassageDate,
-                Score = getScore(userTest),
-                TestId = userTest.Test.Id,
-                TimePassed = userTest.TimePassed,
-                UserId = userId
-            });
+            UserTestDTO result = userTest;
+            result.User.Id = userId;
+            result.Score = getScore(userTest);
+            _unitOfWork.UserTests.Create(result.GetEntityElement());
             await _unitOfWork.SaveAsync();
         }
 
@@ -44,17 +41,25 @@ namespace BLL.Services
 
             foreach(var userQuestion in userQuestions)
             {
+                double result = 0;
                 var originalQuestion = originalQuestions.First(x => x.Id == userQuestion.Id);
+                if (originalQuestion.Answers.Count > 1)
+                {
+                    var userAnswers = userQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
+                    var correctAnswers = originalQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
 
-                var userAnswers = userQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
-                var correctAnswers = originalQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
-
-                double result = userAnswers.Intersect(correctAnswers).Count() - Math.Abs(correctAnswers.Count() - userAnswers.Count());
-                result = result < 0 ? 0 : result;
-                //find result in percent
-                result /= correctAnswers.Count();
-                //find total result
-                result *= originalQuestion.Points;
+                    result = userAnswers.Intersect(correctAnswers).Count() - Math.Abs(correctAnswers.Count() - userAnswers.Count());
+                    result = result < 0 ? 0 : result;
+                    //find result in percent
+                    result /= correctAnswers.Count();
+                    //find total result
+                    result *= originalQuestion.Points;
+                }
+                else
+                {
+                    if (userQuestion.Answers.First().Value.Trim().ToLower() == originalQuestion.Answers.First().Value)
+                        result = originalQuestion.Points;
+                }
                 Score += result;
             }
             return (int)Score;
@@ -68,7 +73,7 @@ namespace BLL.Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _unitOfWork.Dispose();
         }
 
         public async Task<IEnumerable<UserTestDTO>> FindAsync(SearchParameters parameter)
@@ -81,12 +86,12 @@ namespace BLL.Services
                                                     (!parameter.maxPassedTime.HasValue || x.TimePassed <= parameter.maxPassedTime) &&
                                                     (!parameter.scoreMin.HasValue || x.Score >= parameter.scoreMin) &&
                                                     (!parameter.scoreMax.HasValue || x.Score <= parameter.scoreMax);
-            return (await _unitOfWork.UserTests.Find(predicate)).Select(x => new UserTestDTO(x));
+            return (await _unitOfWork.UserTests.Find(predicate)).Select(x => new UserTestDTO(x)).ToList();
         }
 
         public async Task<IEnumerable<UserTestDTO>> GetAllAsync()
         {
-            return (await _unitOfWork.UserTests.GetAll()).Select(x => new UserTestDTO(x));
+            return (await _unitOfWork.UserTests.GetAll()).Select(x => new UserTestDTO(x)).ToList();
         }
 
         public async Task<UserTestDTO> GetByIdAsync(int id)
@@ -105,5 +110,6 @@ namespace BLL.Services
             _unitOfWork.UserTests.Update(result);
             await _unitOfWork.SaveAsync();
         }
+
     }
 }

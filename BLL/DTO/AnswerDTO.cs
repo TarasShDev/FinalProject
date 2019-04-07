@@ -21,14 +21,13 @@ namespace BLL.DTO
             Value = answer.Value;
         }
 
-        public static Answer GetEntityElement(AnswerDTO answer)
+        public Answer GetEntityElement()
         {
             return new Answer
             {
-                Id = answer.Id,
-                QuestionId = answer.QuestionId,
-                Value = answer.Value,
-                IsCorrect=answer.IsCorrect
+                QuestionId = QuestionId,
+                Value = Value.Trim(),
+                IsCorrect = IsCorrect
             };
         }
     }
