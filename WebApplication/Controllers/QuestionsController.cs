@@ -7,9 +7,11 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using BLL.DTO;
 using BLL.Interfaces;
+using System.Web.Http.Cors;
 
 namespace WebApplication.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     [Authorize(Roles ="admin")]
     public class QuestionsController : ApiController
     {

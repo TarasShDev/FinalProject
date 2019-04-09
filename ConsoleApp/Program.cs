@@ -20,8 +20,11 @@ namespace ConsoleApp
 
             using (EFUnitOfWork EF = new EFUnitOfWork("ServiceForTesting"))
             {
-                
-                
+
+                ITestService testService = new TestService(EF);
+                var result =  testService.GetAllAsync().Result;
+                foreach (var t in result)
+                    Console.WriteLine(t.Description);
                
          
             }

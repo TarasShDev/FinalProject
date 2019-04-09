@@ -23,7 +23,7 @@ namespace WebApplication
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            NinjectModule dbModule = new DBModule("ServiceForTesting");
+            NinjectModule dbModule = new DBModule("ConnectionString");
             NinjectModule serviceModule = new ServiceModule();
             var kernel = new StandardKernel(dbModule, serviceModule);
             System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(kernel);

@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using BLL.DTO;
 using BLL.Interfaces;
+using System.Web.Http.Cors;
 
 
 namespace WebApplication.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     [Authorize]
     [RoutePrefix("api/tests")]
     public class TestsController : ApiController
