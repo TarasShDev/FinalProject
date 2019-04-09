@@ -17,25 +17,30 @@ using WebApplication.Models;
 using WebApplication.Providers;
 using WebApplication.Results;
 using BLL.Interfaces;
+using BLL.DTO;
+using System.Web.Http.Cors;
 
 namespace WebApplication.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private IUserService _userService;
 
         public AccountController()
         {
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IUserService userService)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            _userService = userService;
         }
 
         public ApplicationUserManager UserManager
@@ -76,14 +81,38 @@ namespace WebApplication.Controllers
         }
 
         [Authorize]
-        [Route("CurrentUser")]
+        [Route("~/api/CurrentUser")]
         [HttpPost]
         public async Task<IHttpActionResult> GetCurrentUser()
         {
-            IUserService userService = null;
             var UserId = this.User.Identity.GetUserId();
             var User = await _userManager.FindByIdAsync(UserId);
-            return Ok(new { User = User.UserName, Roles = User.Roles, userService.FindByNameAsync(User.UserName).Id });
+            return Ok(new { User = User.UserName, Roles = User.Roles});
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete]
+        [Route("~/api/Users/{id}")]
+        public async Task<IHttpActionResult> DeleteUser(int id)
+        {
+            if (id < 0)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var user = await _userService.GetByIdAsync(id);
+                var User = await _userManager.FindByNameAsync(user.Name);
+                await _userManager.DeleteAsync(User);
+                await _userService.DeleteAsync(id);
+            }
+
+            catch
+            {
+                return StatusCode(System.Net.HttpStatusCode.InternalServerError);
+            }
+            return Ok();
+
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
@@ -330,6 +359,8 @@ namespace WebApplication.Controllers
             return logins;
         }
 
+
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
@@ -348,7 +379,22 @@ namespace WebApplication.Controllers
             {
                 return GetErrorResult(result);
             }
-            //add user to my bd
+            try
+            {
+                await _userService.AddAsync(new UserDTO(0, user.UserName));
+            }
+            catch(ArgumentNullException)
+            {
+                return BadRequest();
+            }
+            catch(ArgumentException exc)
+            {
+                return BadRequest(exc.Message);
+            }
+            catch(FormatException exc)
+            {
+                return BadRequest(exc.Message);
+            }
 
             return Ok();
         }

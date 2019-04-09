@@ -47,7 +47,6 @@ namespace BLL.Services
                 {
                     var userAnswers = userQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
                     var correctAnswers = originalQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
-
                     result = userAnswers.Intersect(correctAnswers).Count() - Math.Abs(correctAnswers.Count() - userAnswers.Count());
                     result = result < 0 ? 0 : result;
                     //find result in percent
@@ -55,7 +54,7 @@ namespace BLL.Services
                     //find total result
                     result *= originalQuestion.Points;
                 }
-                else
+                else if(originalQuestion.Answers.Count==1)
                 {
                     if (userQuestion.Answers.First().Value.Trim().ToLower() == originalQuestion.Answers.First().Value)
                         result = originalQuestion.Points;
@@ -94,18 +93,13 @@ namespace BLL.Services
             return (await _unitOfWork.UserTests.GetAll()).Select(x => new UserTestDTO(x)).ToList();
         }
 
-        public async Task<UserTestDTO> GetByIdAsync(int id)
-        {
-            return new UserTestDTO(await _unitOfWork.UserTests.Get(id));
-        }
-
         public async Task UpdateAsync(UserTestDTO userTest)
         {
             if (userTest == null)
                 throw new ArgumentNullException();
             var result = await _unitOfWork.UserTests.Get(userTest.Id);
             if (result == null)
-                throw new KeyNotFoundException();   
+                throw new ArgumentNullException();
             result.Score = userTest.Score;
             _unitOfWork.UserTests.Update(result);
             await _unitOfWork.SaveAsync();

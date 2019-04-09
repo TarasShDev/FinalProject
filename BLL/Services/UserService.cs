@@ -28,7 +28,7 @@ namespace BLL.Services
             if (isCreated)
                 throw new ArgumentException("Користувач з даним іменем вже існує");
             if (user.Name.Length < Constraints.User.NameMinLength || user.Name.Length > Constraints.User.NameMaxLength)
-                throw new FormatException();
+                throw new FormatException($"Ім'я має бути в межах {Constraints.User.NameMinLength} - {Constraints.User.NameMaxLength} символів");
             _unitOfWork.Users.Create(user.GetEntityElement());
             await _unitOfWork.SaveAsync();
         }
@@ -47,8 +47,18 @@ namespace BLL.Services
         public async Task<IEnumerable<UserDTO>> FindByNameAsync(string name)
         {
             if (name == null)
+                return await GetAllAsync();
+            return (await _unitOfWork.Users.Find(x => x.Name.ToLower().Contains(name.ToLower()))).Select(t => new UserDTO(t)).ToList();
+        }
+
+        public async Task<UserDTO> FindUserByName(string name)
+        {
+            if (name == null)
                 throw new ArgumentNullException();
-            return (await _unitOfWork.Users.Find(x => x.Name.Contains(name))).Select(t => new UserDTO(t)).ToList();
+            var result = (await _unitOfWork.Users.Find(x => x.Name == name)).FirstOrDefault();
+            if (result == null)
+                return null;
+            return new UserDTO(result);
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
@@ -58,7 +68,10 @@ namespace BLL.Services
 
         public async Task<UserDTO> GetByIdAsync(int id)
         {
-            return new UserDTO(await _unitOfWork.Users.Get(id));
+            var result = await _unitOfWork.Users.Get(id);
+            if (result == null)
+                return null;
+            return new UserDTO(result);
         }
 
         public async Task UpdateAsync(UserDTO user)
