@@ -13,7 +13,7 @@ using System.Web.Http.Cors;
 namespace WebApplication.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/tests")]
     public class TestsController : ApiController
     {

@@ -33,8 +33,11 @@ namespace DAL.EF
         {
             protected override void Seed(TestContext context)
             {
+                var user = new User() { Name = "User" };
+                var admin = new User() { Name = "Admin" };
                 Test test1 = new Test { Description = "Test2 is good", Name = "Test2" };
                 context.Tests.Add(test1);
+                context.Users.AddRange(new List<User> { user, admin });
                 context.SaveChanges();
             }
         }

@@ -56,8 +56,6 @@ namespace BLL.Services
             if (name == null)
                 throw new ArgumentNullException();
             var result = (await _unitOfWork.Users.Find(x => x.Name == name)).FirstOrDefault();
-            if (result == null)
-                return null;
             return new UserDTO(result);
         }
 

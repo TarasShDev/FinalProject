@@ -82,12 +82,18 @@ namespace WebApplication.Controllers
 
         [Authorize]
         [Route("~/api/CurrentUser")]
-        [HttpPost]
+        [HttpGet]
         public async Task<IHttpActionResult> GetCurrentUser()
         {
-            var UserId = this.User.Identity.GetUserId();
-            var User = await _userManager.FindByIdAsync(UserId);
-            return Ok(new { User = User.UserName, Roles = User.Roles});
+
+            var UserName = this.User.Identity.Name;
+            var User = UserManager.FindByName(UserName);
+            
+            if (User == null)
+                return NotFound();
+            var RolesForUser = await UserManager.GetRolesAsync(User.Id);
+            return Ok(new { User = User.UserName, Roles = RolesForUser[0]});
+
         }
 
         [Authorize(Roles = "admin")]
@@ -102,8 +108,8 @@ namespace WebApplication.Controllers
             try
             {
                 var user = await _userService.GetByIdAsync(id);
-                var User = await _userManager.FindByNameAsync(user.Name);
-                await _userManager.DeleteAsync(User);
+                var User = await UserManager.FindByNameAsync(user.Name);
+                await UserManager.DeleteAsync(User);
                 await _userService.DeleteAsync(id);
             }
 

@@ -44,32 +44,24 @@ namespace BLL.Services
         public async Task<IEnumerable<TestDTO>> FindByNameAsync(string name)
         {
             var result = await _unitOfWork.Tests.Find(x => x.Name.ToLower().Contains(name.ToLower()));
-            if (result == null || result.Count()==0)
-                return null;
             return result.Select(x => new TestDTO(x) { IsOpened=isOpened(x)});
         }
 
         public async Task<IEnumerable<TestDTO>> FindOpenedByNameAsync(string name)
         {
             var result = await _unitOfWork.Tests.Find(t => t.Name.ToLower().Contains(name.ToLower()) && isOpened(t));
-            if (result == null || result.Count()==0)
-                return null;
             return result.Select(x => new TestDTO(x) { IsOpened=true});
         }
 
         public async Task<IEnumerable<TestDTO>> GetAllAsync()
         {
             var result = await _unitOfWork.Tests.GetAll();
-            if (result == null || result.Count() == 0)
-                return null;
             return result.Select(t => new TestDTO(t) { IsOpened=isOpened(t)});
         }
 
         public async Task<IEnumerable<TestDTO>> GetAllOpenedAsync()
         {
             var result = await _unitOfWork.Tests.Find(t => isOpened(t));
-            if (result == null || result.Count() == 0)
-                return null;
             return result.Select(x => new TestDTO(x) { IsOpened=true});
         }
 

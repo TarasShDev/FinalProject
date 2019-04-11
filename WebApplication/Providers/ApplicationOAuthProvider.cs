@@ -56,6 +56,9 @@ namespace WebApplication.Providers
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
+            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var RolesForUser = userManager.GetRolesAsync(context.Identity.GetUserId());
+            context.AdditionalResponseParameters.Add("role", RolesForUser.Result[0]);
 
             return Task.FromResult<object>(null);
         }
