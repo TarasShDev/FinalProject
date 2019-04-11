@@ -31,16 +31,16 @@ namespace WebApplication.Controllers
         private ApplicationUserManager _userManager;
         private IUserService _userService;
 
-        public AccountController()
+        public AccountController(IUserService userService)
         {
+            _userService = userService;
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat, IUserService userService)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-            _userService = userService;
         }
 
         public ApplicationUserManager UserManager
@@ -92,7 +92,8 @@ namespace WebApplication.Controllers
             if (User == null)
                 return NotFound();
             var RolesForUser = await UserManager.GetRolesAsync(User.Id);
-            return Ok(new { User = User.UserName, Roles = RolesForUser[0]});
+            int id = (await _userService.FindUserByName(UserName)).Id;
+            return Ok(new { User = User.UserName, Role = RolesForUser[0], Id=id });
 
         }
 

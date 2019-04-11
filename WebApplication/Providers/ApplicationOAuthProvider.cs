@@ -10,12 +10,15 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using WebApplication.Models;
+using BLL.Interfaces;
+using BLL.Services;
 
 namespace WebApplication.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
+        
 
         public ApplicationOAuthProvider(string publicClientId)
         {
@@ -23,7 +26,7 @@ namespace WebApplication.Providers
             {
                 throw new ArgumentNullException("publicClientId");
             }
-
+            
             _publicClientId = publicClientId;
         }
 
@@ -56,9 +59,7 @@ namespace WebApplication.Providers
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
-            var RolesForUser = userManager.GetRolesAsync(context.Identity.GetUserId());
-            context.AdditionalResponseParameters.Add("role", RolesForUser.Result[0]);
+            
 
             return Task.FromResult<object>(null);
         }
