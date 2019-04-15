@@ -36,6 +36,8 @@ namespace WebApplication.Controllers
         {
             if (answer == null)
                 return StatusCode(HttpStatusCode.BadRequest);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             try
             {
                 await _answerService.CreateAsync(answer);
@@ -60,6 +62,8 @@ namespace WebApplication.Controllers
         {
             if (answer == null)
                 return StatusCode(HttpStatusCode.BadRequest);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             try
             {
                 answer.Id = id;

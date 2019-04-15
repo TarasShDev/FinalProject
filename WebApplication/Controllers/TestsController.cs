@@ -96,6 +96,8 @@ namespace WebApplication.Controllers
         {
             if (test == null)
                 return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             try
             {
                 await _testService.AddAsync(test);
@@ -125,6 +127,8 @@ namespace WebApplication.Controllers
         {
             if (test == null)
                 return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             try
             {
                 test.Id = id;

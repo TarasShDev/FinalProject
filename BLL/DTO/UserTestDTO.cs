@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace BLL.DTO
 
         public TestDTO Test { get; set; }
 
+        [Required]
         public int Score { get; set; }
 
         public double TimePassed { get; set; }

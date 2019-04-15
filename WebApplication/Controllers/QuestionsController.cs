@@ -36,9 +36,10 @@ namespace WebApplication.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> AddQuestion([FromBody] QuestionDTO question)
         {
-            
             if (question == null)
                 return StatusCode(HttpStatusCode.BadRequest);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             try
             {
                 await _questionService.CreateAsync(question);
@@ -55,9 +56,9 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(exc.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(e.StackTrace);
+                return BadRequest();
             }
             return StatusCode(HttpStatusCode.Created);
         }
@@ -68,6 +69,8 @@ namespace WebApplication.Controllers
         {
             if (question == null)
                 return StatusCode(HttpStatusCode.BadRequest);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             try
             {
                 question.Id = id;

@@ -52,6 +52,8 @@ namespace WebApplication.Controllers
         {
             if (userTest == null)
                 return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             string userName = User.Identity.Name;
             var user = await _userService.FindUserByName(userName);
             if (user == null)
@@ -60,13 +62,13 @@ namespace WebApplication.Controllers
             {
                 await _userTestService.AddAsync(userTest, user.Id);
             }
-            catch(ArgumentNullException e)
+            catch(ArgumentNullException)
             {
-                return BadRequest(e.StackTrace);
+                return BadRequest();
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                return BadRequest(e.StackTrace);
+                return BadRequest();
             }
             return StatusCode(HttpStatusCode.Created);
         }
@@ -77,6 +79,8 @@ namespace WebApplication.Controllers
         {
             if (id < 0)
                 return BadRequest("Невалідний ідентифікатор");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             if (userTest == null)
                 return BadRequest();
             try
