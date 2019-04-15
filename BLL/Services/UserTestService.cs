@@ -22,27 +22,33 @@ namespace BLL.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task AddAsync(UserTestDTO userTest, int userId)
+        public async Task AddAsync(TestDTO userTest, int userId)
         {
             if (userTest == null)
                 throw new ArgumentNullException();
-            UserTestDTO result = userTest;
-            result.User.Id = userId;
-            result.Score = getScore(userTest);
+            UserTestDTO result = new UserTestDTO();
+            result.Id = 0;
+            result.User.Id=userId;
+            result.Test.Id = userTest.Id;
+            result.Score = await getScore(userTest);
+            result.PassageDate = DateTime.Now;
+            result.TimePassed = userTest.PassageTime;
             _unitOfWork.UserTests.Create(result.GetEntityElement());
             await _unitOfWork.SaveAsync();
         }
 
-        private int getScore(UserTestDTO test)
+        private async Task<int> getScore(TestDTO test)
         {
-            var userQuestions = test.Test.Questions;
-            var originalQuestions = _unitOfWork.Tests.Get(test.Id).Result.Questions;
+            var userQuestions = test.Questions;
+            var originalQuestions = (await _unitOfWork.Tests.Get(test.Id)).Questions;
             double Score = 0;
 
             foreach(var userQuestion in userQuestions)
             {
                 double result = 0;
-                var originalQuestion = originalQuestions.First(x => x.Id == userQuestion.Id);
+                var originalQuestion = originalQuestions.FirstOrDefault(x => x.Id == userQuestion.Id);
+                if (originalQuestion == null)
+                    continue;
                 if (originalQuestion.Answers.Count > 1)
                 {
                     var userAnswers = userQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
@@ -56,7 +62,7 @@ namespace BLL.Services
                 }
                 else if(originalQuestion.Answers.Count==1)
                 {
-                    if (userQuestion.Answers.First().Value.Trim().ToLower() == originalQuestion.Answers.First().Value)
+                    if (userQuestion.Answers.First().Value.Trim().ToLower() == originalQuestion.Answers.First().Value.ToLower())
                         result = originalQuestion.Points;
                 }
                 Score += result;

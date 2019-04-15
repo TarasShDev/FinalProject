@@ -80,7 +80,7 @@ namespace WebApplication.Controllers
             return Ok();
         }
 
-        [Authorize]
+        //[Authorize]
         [Route("~/api/CurrentUser")]
         [HttpGet]
         public async Task<IHttpActionResult> GetCurrentUser()
@@ -93,7 +93,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             var RolesForUser = await UserManager.GetRolesAsync(User.Id);
             int id = (await _userService.FindUserByName(UserName)).Id;
-            return Ok(new { User = User.UserName, Role = RolesForUser[0], Id=id });
+            return Ok(new { Name = User.UserName, Role = RolesForUser[0], Id=id });
 
         }
 
@@ -110,6 +110,9 @@ namespace WebApplication.Controllers
             {
                 var user = await _userService.GetByIdAsync(id);
                 var User = await UserManager.FindByNameAsync(user.Name);
+                var role = (await UserManager.GetRolesAsync(User.Id));
+                if(role.Count>0 && role[0]=="admin")
+                    return BadRequest();
                 await UserManager.DeleteAsync(User);
                 await _userService.DeleteAsync(id);
             }
@@ -388,7 +391,9 @@ namespace WebApplication.Controllers
             }
             try
             {
-                await _userService.AddAsync(new UserDTO(0, user.UserName));
+                await _userService.AddAsync(new UserDTO() { Name= user.UserName });
+                string id = UserManager.FindByName(model.Email).Id;
+                UserManager.AddToRole(id, "user");
             }
             catch(ArgumentNullException)
             {

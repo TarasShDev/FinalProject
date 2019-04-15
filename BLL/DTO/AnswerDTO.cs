@@ -21,6 +21,8 @@ namespace BLL.DTO
             Value = answer.Value;
         }
 
+        public AnswerDTO() { }
+
         public Answer GetEntityElement()
         {
             return new Answer

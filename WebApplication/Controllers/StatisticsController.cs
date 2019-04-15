@@ -12,7 +12,7 @@ using System.Web.Http.Cors;
 
 namespace WebApplication.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     [Authorize]
     [RoutePrefix("api/statistics")]
     public class StatisticsController : ApiController
@@ -47,8 +47,8 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<IHttpActionResult> AddStatistic(UserTestDTO userTest)
+        //[Authorize(Roles = "admin")]
+        public async Task<IHttpActionResult> AddStatistic([FromBody]TestDTO userTest)
         {
             if (userTest == null)
                 return BadRequest();
@@ -60,13 +60,13 @@ namespace WebApplication.Controllers
             {
                 await _userTestService.AddAsync(userTest, user.Id);
             }
-            catch(ArgumentNullException)
+            catch(ArgumentNullException e)
             {
-                return BadRequest("Сталася помилка");
+                return BadRequest(e.StackTrace);
             }
-            catch(Exception)
+            catch(Exception e)
             {
-                return BadRequest("Сталася помилка");
+                return BadRequest(e.StackTrace);
             }
             return StatusCode(HttpStatusCode.Created);
         }

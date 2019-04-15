@@ -17,7 +17,7 @@ namespace BLL.DTO
 
         public int Score { get; set; }
 
-        public TimeSpan TimePassed { get; set; }
+        public double TimePassed { get; set; }
         public DateTime PassageDate { get; set; }
 
         public UserTestDTO(UserTest userTest)
@@ -26,8 +26,14 @@ namespace BLL.DTO
             User = new UserDTO(userTest.User);
             Test = new TestDTO(userTest.Test);
             Score = userTest.Score;
-            TimePassed = userTest.TimePassed;
+            TimePassed = userTest.TimePassed.TotalSeconds;
             PassageDate = userTest.PassageDate;
+        }
+
+        public UserTestDTO()
+        {
+            User = new UserDTO();
+            Test = new TestDTO();
         }
 
         public UserTest GetEntityElement()
@@ -36,7 +42,7 @@ namespace BLL.DTO
             {
                 Id = this.Id,
                 PassageDate = this.PassageDate,
-                TimePassed = this.TimePassed,
+                TimePassed = TimeSpan.FromSeconds(this.TimePassed),
                 Score = this.Score,
                 TestId = this.Test.Id,
                 UserId = this.User.Id

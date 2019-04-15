@@ -32,5 +32,8 @@ namespace BLL.DTO
                 Points = Points
             };
         }
+
+        public QuestionDTO()
+        { }
     }
 }

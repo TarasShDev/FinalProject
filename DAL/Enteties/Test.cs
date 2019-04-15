@@ -17,7 +17,8 @@ namespace DAL.Enteties
         public string Description { get; set; }
 
         [Required]
-        public TimeSpan PassageTime { get; set; }
+        [Range(Constraints.Constraints.Test.MinMinutes, Constraints.Constraints.Test.MaxMinutes)]
+        public double PassageTime { get; set; }
 
         [Required]
         [MaxLength(Constraints.Constraints.Test.NameMaxLength), MinLength(Constraints.Constraints.Test.NameMinLength)]

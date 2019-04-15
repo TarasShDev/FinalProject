@@ -24,7 +24,7 @@ namespace BLL.Services
         {
             if (question == null)
                 throw new ArgumentNullException();
-            if (question.Points < Constraints.Question.MaxPointsValue || question.Points > Constraints.Question.MaxPointsValue)
+            if (question.Points < Constraints.Question.MinPointsValue || question.Points > Constraints.Question.MaxPointsValue)
                 throw new ArgumentOutOfRangeException();
             if (question.Header.Length < Constraints.Question.HeaderMinLength || question.Header.Length > Constraints.Question.HeaderMaxLength)
                 throw new FormatException();
@@ -55,7 +55,7 @@ namespace BLL.Services
         {
             if (question == null)
                 throw new ArgumentNullException();
-            if (question.Points < Constraints.Question.MaxPointsValue || question.Points > Constraints.Question.MaxPointsValue)
+            if (question.Points < Constraints.Question.MinPointsValue || question.Points > Constraints.Question.MaxPointsValue)
                 throw new ArgumentOutOfRangeException();
             if (question.Header.Length < Constraints.Question.HeaderMinLength || question.Header.Length > Constraints.Question.HeaderMaxLength)
                 throw new FormatException();

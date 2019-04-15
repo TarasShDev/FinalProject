@@ -12,7 +12,7 @@ namespace BLL.DTO
         public int Id { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
-        public TimeSpan PassageTime { get; set; }
+        public double PassageTime { get; set; }
         public bool IsOpened { get; set; }
         public ICollection<QuestionDTO> Questions { get; set; }
 
@@ -23,6 +23,8 @@ namespace BLL.DTO
             Name = test.Name;
             PassageTime = test.PassageTime;
         }
+
+        public TestDTO() { }
 
         public Test GetEntityElement()
         {

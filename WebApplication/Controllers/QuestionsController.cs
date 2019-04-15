@@ -11,8 +11,8 @@ using System.Web.Http.Cors;
 
 namespace WebApplication.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
-    [Authorize(Roles ="admin")]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
+    [Authorize]
     public class QuestionsController : ApiController
     {
         private IQuestionService _questionService;
@@ -23,6 +23,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> GetById(int id)
         {
             var result = await _questionService.GetByIdAsync(id);
@@ -32,8 +33,10 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> AddQuestion([FromBody] QuestionDTO question)
         {
+            
             if (question == null)
                 return StatusCode(HttpStatusCode.BadRequest);
             try
@@ -52,14 +55,15 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(exc.Message);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest("Сталася помилка");
+                return BadRequest(e.StackTrace);
             }
             return StatusCode(HttpStatusCode.Created);
         }
 
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> ChangeQuestion(int id, [FromBody] QuestionDTO question)
         {
             if (question == null)
@@ -67,7 +71,7 @@ namespace WebApplication.Controllers
             try
             {
                 question.Id = id;
-                await _questionService.CreateAsync(question);
+                await _questionService.UpdateAsync(question);
             }
             catch (ArgumentNullException exc)
             {
@@ -89,6 +93,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> DeleteQuestion(int id)
         {
             try

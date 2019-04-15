@@ -12,8 +12,8 @@ using System.Web.Http.Cors;
 
 namespace WebApplication.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
-    //[Authorize]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
+    [Authorize]
     [RoutePrefix("api/tests")]
     public class TestsController : ApiController
     {
@@ -35,7 +35,7 @@ namespace WebApplication.Controllers
 
         [HttpGet]
         [Route("getall")]
-        [Authorize(Roles ="admin")]
+        //[Authorize(Roles ="admin")]
         public async Task<IHttpActionResult> GetAllTests()
         {
             var result = await _testService.GetAllAsync();
@@ -45,6 +45,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Route("findopened/{name}")]
         public async Task<IHttpActionResult> GetByName(string name)
         {
             var result = await _testService.FindOpenedByNameAsync(name);
@@ -55,7 +56,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [Route("findall")]
+        [Route("findall/{name}")]
         [Authorize(Roles = "admin")]
         public async Task<IHttpActionResult> GetAllByName(string name)
         {

@@ -11,7 +11,7 @@ namespace DAL.Constraints
         public class Question
         {
             public const int HeaderMaxLength = 300;
-            public const int HeaderMinLength = 15;
+            public const int HeaderMinLength = 1;
             public const int MinPointsValue = 1;
             public const int MaxPointsValue = Int32.MaxValue;
         }
@@ -21,7 +21,7 @@ namespace DAL.Constraints
             public const int DescriptionMaxLength = 800;
             public const int DescriptionMinLength = 1;
             public const int NameMaxLength = 120;
-            public const int NameMinLength = 4;
+            public const int NameMinLength = 1;
             public const double MinMinutes = 1;
             public const double MaxMinutes = 180;
         }

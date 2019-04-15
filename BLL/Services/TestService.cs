@@ -28,7 +28,7 @@ namespace BLL.Services
                 throw new FormatException($"Опис має бути в межах {Constraints.Test.DescriptionMinLength} - {Constraints.Test.DescriptionMaxLength} символів.");
             if (test.Name.Length < Constraints.Test.NameMinLength || test.Name.Length > Constraints.Test.NameMaxLength)
                 throw new FormatException($"Назва тесту має бути в межах {Constraints.Test.NameMinLength} - {Constraints.Test.NameMaxLength} символів.");
-            if (test.PassageTime.TotalMinutes < Constraints.Test.MinMinutes || test.PassageTime.TotalMinutes > Constraints.Test.MaxMinutes)
+            if (test.PassageTime < Constraints.Test.MinMinutes || test.PassageTime > Constraints.Test.MaxMinutes)
                 throw new ArgumentOutOfRangeException($"Тривалість тесту має бути в межах {Constraints.Test.MinMinutes} - {Constraints.Test.MaxMinutes} хвилин");
             _unitOfWork.Tests.Create(test.GetEntityElement());
             await _unitOfWork.SaveAsync();
@@ -111,7 +111,7 @@ namespace BLL.Services
                 throw new FormatException($"Опис має бути в межах {Constraints.Test.DescriptionMinLength} - {Constraints.Test.DescriptionMaxLength} символів.");
             if (test.Name.Length < Constraints.Test.NameMinLength || test.Name.Length > Constraints.Test.NameMaxLength)
                 throw new FormatException($"Назва тесту має бути в межах {Constraints.Test.NameMinLength} - {Constraints.Test.NameMaxLength} символів.");
-            if (test.PassageTime.TotalMinutes < Constraints.Test.MinMinutes || test.PassageTime.TotalMinutes > Constraints.Test.MaxMinutes)
+            if (test.PassageTime < Constraints.Test.MinMinutes || test.PassageTime > Constraints.Test.MaxMinutes)
                 throw new ArgumentOutOfRangeException($"Тривалість тесту має бути в межах {Constraints.Test.MinMinutes} - {Constraints.Test.MaxMinutes} хвилин");
             Test result = await _unitOfWork.Tests.Get(test.Id);
             if (result == null)

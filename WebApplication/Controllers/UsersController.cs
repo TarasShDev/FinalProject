@@ -11,7 +11,7 @@ using System.Web.Http.Cors;
 
 namespace WebApplication.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*", SupportsCredentials = true)]
     [Authorize(Roles = "admin")]
     public class UsersController : ApiController
     {

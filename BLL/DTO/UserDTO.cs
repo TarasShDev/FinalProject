@@ -17,11 +17,8 @@ namespace BLL.DTO
             Id = user.Id;
             Name = user.Name;
         }
-        public UserDTO(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        public UserDTO()
+        { }
 
         public User GetEntityElement()
         {
