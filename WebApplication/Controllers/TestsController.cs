@@ -35,7 +35,7 @@ namespace WebApplication.Controllers
 
         [HttpGet]
         [Route("getall")]
-        //[Authorize(Roles ="admin")]
+        [Authorize(Roles ="admin")]
         public async Task<IHttpActionResult> GetAllTests()
         {
             var result = await _testService.GetAllAsync();
