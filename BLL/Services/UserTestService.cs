@@ -52,11 +52,15 @@ namespace BLL.Services
                 if (originalQuestion.Answers.Count > 1)
                 {
                     var userAnswers = userQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
-                    var correctAnswers = originalQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
-                    result = userAnswers.Intersect(correctAnswers).Count() - Math.Abs(correctAnswers.Count() - userAnswers.Count());
+                    var allCorrectAnswers = originalQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
+
+                    var userFalseAnswers = userQuestion.Answers.Where(x => x.IsCorrect).Select(x => x.Id);
+                    var allFalseAnswers = originalQuestion.Answers.Where(x => x.IsCorrect==false).Select(x => x.Id);
+
+                    result = userAnswers.Intersect(allCorrectAnswers).Count() - userFalseAnswers.Intersect(allFalseAnswers).Count();
                     result = result < 0 ? 0 : result;
                     //find result in percent
-                    result /= correctAnswers.Count();
+                    result /= allCorrectAnswers.Count();
                     //find total result
                     result *= originalQuestion.Points;
                 }
@@ -91,12 +95,18 @@ namespace BLL.Services
                                                     (!parameter.maxPassedTime.HasValue || x.TimePassed <= parameter.maxPassedTime) &&
                                                     (!parameter.scoreMin.HasValue || x.Score >= parameter.scoreMin) &&
                                                     (!parameter.scoreMax.HasValue || x.Score <= parameter.scoreMax);
-            return (await _unitOfWork.UserTests.Find(predicate)).Select(x => new UserTestDTO(x)).ToList();
+            return (await _unitOfWork.UserTests.Find(predicate)).Select(x => new UserTestDTO(x)
+            {
+                TotalScore = Task.Run(() => _unitOfWork.Tests.Get(x.TestId)).Result.Questions.Sum(q => q.Points)
+            }).ToList();
         }
 
         public async Task<IEnumerable<UserTestDTO>> GetAllAsync()
         {
-            return (await _unitOfWork.UserTests.GetAll()).Select(x => new UserTestDTO(x)).ToList();
+            return (await _unitOfWork.UserTests.GetAll()).Select(x => new UserTestDTO(x)
+            {
+                TotalScore = Task.Run(() => _unitOfWork.Tests.Get(x.TestId)).Result.Questions.Sum(q => q.Points)
+            }).ToList();
         }
 
         public async Task UpdateAsync(UserTestDTO userTest)

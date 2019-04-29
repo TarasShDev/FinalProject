@@ -19,6 +19,8 @@ namespace BLL.DTO
         [Required]
         public int Score { get; set; }
 
+        public int TotalScore { get; set; }
+
         public double TimePassed { get; set; }
         public DateTime PassageDate { get; set; }
 
